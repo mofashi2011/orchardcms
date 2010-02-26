@@ -1,0 +1,269 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9916839C-39FC-4CEB-A5AF-89CA7E87119F}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Orchard.Core</RootNamespace>
+    <AssemblyName>Orchard.Core</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\aspnetmvc\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.Mobile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Controllers\BodyDriver.cs" />
+    <Compile Include="Common\Controllers\RoutableDriver.cs" />
+    <Compile Include="Common\Controllers\RoutableController.cs" />
+    <Compile Include="Common\Models\RoutableAspectHandler.cs" />
+    <Compile Include="Common\Permissions.cs" />
+    <Compile Include="Common\Records\CommonVersionRecord.cs" />
+    <Compile Include="Common\Routes.cs" />
+    <Compile Include="Common\Services\IRoutableService.cs" />
+    <Compile Include="Common\Services\RoutableService.cs" />
+    <Compile Include="Common\Utilities\LazyField.cs" />
+    <Compile Include="Common\Providers\CommonAspectHandler.cs" />
+    <Compile Include="Common\Models\CommonAspect.cs" />
+    <Compile Include="Common\Providers\BodyAspectHandler.cs" />
+    <Compile Include="Common\Models\BodyAspect.cs" />
+    <Compile Include="Common\Models\RoutableAspect.cs" />
+    <Compile Include="Common\Providers\RoutableAspectHandler.cs" />
+    <Compile Include="Common\Records\BodyRecord.cs" />
+    <Compile Include="Common\Records\CommonRecord.cs" />
+    <Compile Include="Common\Records\RoutableRecord.cs" />
+    <Compile Include="Common\ViewModels\BodyDisplayViewModel.cs" />
+    <Compile Include="Common\ViewModels\BodyEditorViewModel.cs" />
+    <Compile Include="Common\ViewModels\RoutableEditorViewModel.cs" />
+    <Compile Include="Common\ViewModels\OwnerEditorViewModel.cs" />
+    <Compile Include="Feeds\Controllers\FeedController.cs" />
+    <Compile Include="Feeds\IFeedManager.cs" />
+    <Compile Include="Feeds\Rss\Routes.cs" />
+    <Compile Include="Feeds\Services\FeedFilter.cs" />
+    <Compile Include="Feeds\Services\FeedManager.cs" />
+    <Compile Include="Feeds\StandardBuilders\ItemInspector.cs" />
+    <Compile Include="Feeds\StandardQueries\ContainerFeedQuery.cs" />
+    <Compile Include="Feeds\StandardBuilders\CorePartsFeedItemBuilder.cs" />
+    <Compile Include="Feeds\IFeedBuilder.cs" />
+    <Compile Include="Feeds\IFeedBuilderProvider.cs" />
+    <Compile Include="Feeds\IFeedQuery.cs" />
+    <Compile Include="Feeds\IFeedQueryProvider.cs" />
+    <Compile Include="Feeds\IFeedItemBuilder.cs" />
+    <Compile Include="Feeds\Models\FeedContext.cs" />
+    <Compile Include="Feeds\Models\FeedItem.cs" />
+    <Compile Include="Feeds\Models\FeedResponse.cs" />
+    <Compile Include="Feeds\Rss\RssFeedBuilder.cs" />
+    <Compile Include="Feeds\Rss\RssResult.cs" />
+    <Compile Include="HomePage\Controllers\HomeController.cs" />
+    <Compile Include="HomePage\Routes.cs" />
+    <Compile Include="Navigation\AdminMenu.cs" />
+    <Compile Include="Navigation\Controllers\AdminController.cs" />
+    <Compile Include="Navigation\Models\MenuItem.cs" />
+    <Compile Include="Navigation\Drivers\MenuItemDriver.cs" />
+    <Compile Include="Navigation\Handlers\MenuItemHandler.cs" />
+    <Compile Include="Navigation\Models\MenuPart.cs" />
+    <Compile Include="Navigation\Drivers\MenuPartDriver.cs" />
+    <Compile Include="Navigation\Handlers\MenuPartHandler.cs" />
+    <Compile Include="Navigation\Permissions.cs" />
+    <Compile Include="Navigation\Records\MenuItemRecord.cs" />
+    <Compile Include="Navigation\Records\MenuPartRecord.cs" />
+    <Compile Include="Navigation\Services\MainMenu.cs" />
+    <Compile Include="Navigation\Filters\MainMenuFilter.cs" />
+    <Compile Include="Navigation\ViewModels\CreateMenuItemViewModel.cs" />
+    <Compile Include="Navigation\ViewModels\MenuItemEntry.cs" />
+    <Compile Include="Navigation\ViewModels\NavigationManagementViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scheduling\Records\ScheduledTaskRecord.cs" />
+    <Compile Include="Scheduling\Services\PublishingTaskHandler.cs" />
+    <Compile Include="Scheduling\Services\PublishingTaskManager.cs" />
+    <Compile Include="Scheduling\Services\ScheduledTaskManager.cs" />
+    <Compile Include="Scheduling\Services\ScheduledTaskExecutor.cs" />
+    <Compile Include="Scheduling\Models\Task.cs" />
+    <Compile Include="Settings\Controllers\SiteSettingsDriver.cs" />
+    <Compile Include="Settings\Permissions.cs" />
+    <Compile Include="Themes\Preview\IPreviewTheme.cs" />
+    <Compile Include="Themes\Preview\PreviewThemeFilter.cs" />
+    <Compile Include="Themes\Preview\PreviewTheme.cs" />
+    <Compile Include="Themes\Services\SafeModeThemeSelector.cs" />
+    <Compile Include="Settings\AdminMenu.cs" />
+    <Compile Include="Settings\Controllers\AdminController.cs" />
+    <Compile Include="Settings\Models\SiteSettingsHandler.cs" />
+    <Compile Include="Settings\Models\SiteSettings.cs" />
+    <Compile Include="Settings\Records\SiteSettingsRecord.cs" />
+    <Compile Include="Settings\Services\SiteService.cs" />
+    <Compile Include="Settings\ViewModels\SettingsIndexViewModel.cs" />
+    <Compile Include="Themes\AdminMenu.cs" />
+    <Compile Include="Themes\Controllers\AdminController.cs" />
+    <Compile Include="Themes\Models\Theme.cs" />
+    <Compile Include="Themes\Models\ThemeSiteSettings.cs" />
+    <Compile Include="Themes\Models\ThemeSiteSettingsHandler.cs" />
+    <Compile Include="Themes\Permissions.cs" />
+    <Compile Include="Themes\Records\ThemeRecord.cs" />
+    <Compile Include="Themes\Records\ThemeSiteSettingsRecord.cs" />
+    <Compile Include="Themes\Services\SiteThemeSelector.cs" />
+    <Compile Include="Themes\Services\ThemeService.cs" />
+    <Compile Include="Themes\ViewModels\PreviewViewModel.cs" />
+    <Compile Include="Themes\ViewModels\ThemesIndexViewModel.cs" />
+    <Compile Include="XmlRpc\Controllers\HomeController.cs" />
+    <Compile Include="XmlRpc\Controllers\LiveWriterController.cs" />
+    <Compile Include="XmlRpc\IXmlRpcHandler.cs" />
+    <Compile Include="XmlRpc\Models\ModelBinderProvider.cs" />
+    <Compile Include="XmlRpc\Models\XRpcArray.cs" />
+    <Compile Include="XmlRpc\Models\XRpcData.cs" />
+    <Compile Include="XmlRpc\Models\XRpcMethodCall.cs" />
+    <Compile Include="XmlRpc\Models\XRpcMethodResponse.cs" />
+    <Compile Include="XmlRpc\Models\XRpcStruct.cs" />
+    <Compile Include="XmlRpc\Services\XmlRpcReader.cs" />
+    <Compile Include="XmlRpc\Services\XmlRpcWriter.cs" />
+    <Compile Include="XmlRpc\XmlRpcContext.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Common\Module.txt" />
+    <Content Include="Settings\Module.txt" />
+    <Content Include="Settings\Views\Admin\Index.ascx" />
+    <Content Include="Web.config" />
+    <Content Include="XmlRpc\Module.txt" />
+    <Content Include="XmlRpc\Views\Home\Index.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Orchard\Orchard.csproj">
+      <Project>{2D1D92BB-4555-4CBE-8D0E-63563D6CE4C6}</Project>
+      <Name>Orchard</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Settings\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="XmlRpc\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Common\Views\Web.config" />
+    <Content Include="Themes\Module.txt" />
+    <Content Include="Themes\Views\Admin\Index.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Common\Scripts\jquery.slugify.js" />
+    <Content Include="Common\Views\DisplayTemplates\Parts\Common.Body.ascx" />
+    <Content Include="Common\Views\EditorTemplates\Parts\Common.Routable.ascx" />
+    <Content Include="Common\Views\EditorTemplates\Parts\Common.Body.ascx" />
+    <Content Include="Common\Views\EditorTemplates\Parts\Common.Owner.ascx" />
+    <Content Include="Feeds\Module.txt" />
+    <Content Include="Navigation\Module.txt" />
+    <Content Include="Scheduling\Module.txt" />
+    <Content Include="Settings\Views\EditorTemplates\Items\Settings.Site.ascx" />
+    <Content Include="Themes\Views\Admin\ThemePreview.ascx" />
+    <Content Include="Themes\Views\Admin\Install.aspx" />
+    <Content Include="Themes\Views\Header.ascx" />
+    <Content Include="Themes\Views\Document.aspx" />
+    <Content Include="Themes\Views\EditorTemplates\Parts\Themes.SiteSettings.ascx" />
+    <Content Include="Themes\Views\HeadPreload.ascx" />
+    <Content Include="Themes\Views\Layout.ascx" />
+    <Content Include="Themes\Views\Messages.ascx" />
+    <Content Include="Themes\Views\User.ascx" />
+    <Content Include="Themes\Views\Menu.ascx" />
+    <Content Include="Themes\Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="HomePage\Module.txt" />
+    <Content Include="Navigation\Views\Admin\Index.ascx" />
+    <Content Include="Navigation\Views\EditorTemplates\Parts\Navigation.EditMenuPart.ascx" />
+    <Content Include="Navigation\Views\Web.config" />
+    <Content Include="Themes\Scripts\jquery-1.4.1.js" />
+    <Content Include="Themes\Scripts\jquery-1.4.1.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Scheduling\Controllers\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v9.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target> -->
+  <!-- To enable MVC area subproject support, uncomment the following two lines:
+  <UsingTask TaskName="Microsoft.Web.Mvc.Build.CreateAreaManifest" AssemblyName="Microsoft.Web.Mvc.Build, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+  <UsingTask TaskName="Microsoft.Web.Mvc.Build.CopyAreaManifests" AssemblyName="Microsoft.Web.Mvc.Build, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+  -->
+  <Target Name="AfterBuild" DependsOnTargets="AfterBuildCompiler">
+    <PropertyGroup>
+      <AreasManifestDir>$(ProjectDir)\..\Manifests</AreasManifestDir>
+    </PropertyGroup>
+    <!-- If this is an area child project, uncomment the following line:
+    <CreateAreaManifest AreaName="$(AssemblyName)" AreaType="Child" AreaPath="$(ProjectDir)" ManifestPath="$(AreasManifestDir)" ContentFiles="@(Content)" />
+    -->
+    <!-- If this is an area parent project, uncomment the following lines:
+    <CreateAreaManifest AreaName="$(AssemblyName)" AreaType="Parent" AreaPath="$(ProjectDir)" ManifestPath="$(AreasManifestDir)" ContentFiles="@(Content)" />
+    <CopyAreaManifests ManifestPath="$(AreasManifestDir)" CrossCopy="false" RenameViews="true" />
+    -->
+  </Target>
+  <Target Name="AfterBuildCompiler" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)\..\$(ProjectName)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>53609</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://orchard.codeplex.com</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
