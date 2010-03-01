@@ -1,8 +1,8 @@
-﻿<%@ Control Language="C#" Inherits="Orchard.Mvc.ViewUserControl<AdminViewModel>" %>
+﻿<%@ Control Language="C#" Inherits="Orchard.Mvc.ViewUserControl<BaseViewModel>" %>
 <%@ Import Namespace="Orchard.Mvc.ViewModels"%>
 <ul id="navigation" role="navigation">
-    <%if (Model.AdminMenu != null) {
-          foreach (var menuSection in Model.AdminMenu) {
+    <%if (Model.Menu != null) {
+          foreach (var menuSection in Model.Menu) {
               // todo: (heskew) need some help(er)
               var firstSectionItem = menuSection.Items.FirstOrDefault();
               var sectionHeaderMarkup = firstSectionItem != null
