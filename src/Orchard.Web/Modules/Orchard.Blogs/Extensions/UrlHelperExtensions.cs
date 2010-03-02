@@ -1,4 +1,5 @@
 using System.Web.Mvc;
+using Orchard.Mvc.Extensions;
 
 namespace Orchard.Blogs.Extensions {
     public static class UrlHelperExtensions {
@@ -12,6 +13,14 @@ namespace Orchard.Blogs.Extensions {
 
         public static string Blog(this UrlHelper urlHelper, string blogSlug) {
             return urlHelper.Action("Item", "Blog", new {blogSlug, area = "Orchard.Blogs"});
+        }
+
+        public static string BlogLiveWriterManifest(this UrlHelper urlHelper, string blogSlug) {
+            return urlHelper.Action("LiveWriterManifest", "Blog", new { blogSlug, area = "Orchard.Blogs" });
+        }
+
+        public static string BlogRsd(this UrlHelper urlHelper, string blogSlug) {
+            return urlHelper.AbsoluteAction(() => urlHelper.Action("Rsd", "Blog", new { blogSlug, area = "Orchard.Blogs" }));
         }
 
         public static string BlogArchiveYear(this UrlHelper urlHelper, string blogSlug, int year) {
