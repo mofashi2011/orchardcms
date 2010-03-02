@@ -1,17 +1,17 @@
-﻿<%@ Control Language="C#" Inherits="Orchard.Mvc.ViewUserControl<AdminViewModel>" %>
+﻿<%@ Control Language="C#" Inherits="Orchard.Mvc.ViewUserControl<BaseViewModel>" %>
 <%@ Import Namespace="Orchard.Mvc.ViewModels"%>
 <ul id="navigation" role="navigation">
-    <%if (Model.AdminMenu != null) {
-          foreach (var menuSection in Model.AdminMenu) {
+    <%if (Model.Menu != null) {
+          foreach (var menuSection in Model.Menu) {
               // todo: (heskew) need some help(er)
               var firstSectionItem = menuSection.Items.FirstOrDefault();
               var sectionHeaderMarkup = firstSectionItem != null
                   ? Html.ActionLink(menuSection.Text, (string)firstSectionItem.RouteValues["action"], firstSectionItem.RouteValues).ToHtmlString()
                   : string.Format("<span>{0}</span>", Html.Encode(menuSection.Text));
               var classification = "";
-              if (menuSection == Model.AdminMenu.First())
+              if (menuSection == Model.Menu.First())
                   classification = "first ";
-              if (menuSection == Model.AdminMenu.Last())
+              if (menuSection == Model.Menu.Last())
                   classification += "last ";
               
               %>
