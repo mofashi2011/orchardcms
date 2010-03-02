@@ -153,6 +153,7 @@
     <Compile Include="Extensions\Loaders\AreaExtensionLoader.cs" />
     <Compile Include="Extensions\UriExtensions.cs" />
     <Compile Include="Mvc\AntiForgery\ValidateAntiForgeryTokenOrchardAttribute.cs" />
+    <Compile Include="Mvc\Extensions\UrlHelperExtensions.cs" />
     <Compile Include="Mvc\ViewModels\AdaptedViewModel.cs" />
     <Compile Include="Mvc\ViewUserControl.cs">
       <SubType>ASPXCodeBehind</SubType>
@@ -300,6 +301,7 @@
     <Compile Include="UI\PageTitle\IPageTitleBuilder.cs" />
     <Compile Include="UI\PageTitle\PageTitleBuilder.cs" />
     <Compile Include="UI\Resources\IResourceManager.cs" />
+    <Compile Include="UI\Resources\LinkEntry.cs" />
     <Compile Include="UI\Resources\ResourceFilter.cs" />
     <Compile Include="UI\Resources\ResourceManager.cs" />
     <Compile Include="UI\Zones\DelegateZoneItem.cs" />
