@@ -22,4 +22,5 @@ using (Html.BeginFormAntiForgeryPost(Url.Action("LogOn", new {ReturnUrl = Reques
     </div>
     <input type="submit" value="<%=_Encoded("Log On") %>" />
 </fieldset><%
-} %>
+} %><%
+using (this.Capture("end-of-page-scripts")) { %><script type="text/javascript">$("#username").closest("form").helpfullyFocus();</script><% } %>
