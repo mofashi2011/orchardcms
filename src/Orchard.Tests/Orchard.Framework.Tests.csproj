@@ -115,7 +115,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\CommandHandlerDescriptorBuilderTests.cs" />
     <Compile Include="Commands\CommandHandlerTests.cs" />
+    <Compile Include="Commands\CommandManagerTests.cs" />
     <Compile Include="ContentManagement\ContentQueryTests.cs">
       <SubType>Code</SubType>
     </Compile>
