@@ -17,7 +17,7 @@ namespace Orchard.Environment.Topology.Models {
 
     public class ShellTopologyItem {
         public Type Type { get; set; }
-        public Feature Feature { get; set; }
+        public Feature Feature { get; set; }        
     }
 
     public class DependencyTopology : ShellTopologyItem {
