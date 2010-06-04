@@ -6,13 +6,19 @@ using JetBrains.Annotations;
 using Moq;
 using NUnit.Framework;
 using Orchard.ContentManagement.Aspects;
+using Orchard.ContentManagement.MetaData.Records;
+using Orchard.Core.Common;
 using Orchard.Core.Common.Handlers;
 using Orchard.Core.Common.Models;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
 using Orchard.ContentManagement.Records;
+using Orchard.Localization;
 using Orchard.Security;
 using Orchard.Tests.Modules;
+using Orchard.Mvc.ViewModels;
+using Orchard.Core.Common.ViewModels;
+using System.Web.Mvc;
 
 namespace Orchard.Core.Tests.Common.Providers {
     [TestFixture]
@@ -23,12 +29,14 @@ namespace Orchard.Core.Tests.Common.Providers {
 
         public override void Register(ContainerBuilder builder) {
             builder.RegisterType<DefaultContentManager>().As<IContentManager>();
+            builder.RegisterType<DefaultContentManagerSession>().As<IContentManagerSession>();
             builder.RegisterType<TestHandler>().As<IContentHandler>();
             builder.RegisterType<CommonAspectHandler>().As<IContentHandler>();
 
             _authn = new Mock<IAuthenticationService>();
             _authz = new Mock<IAuthorizationService>();
             _membership = new Mock<IMembershipService>();
+
             builder.RegisterInstance(_authn.Object);
             builder.RegisterInstance(_authz.Object);
             builder.RegisterInstance(_membership.Object);
@@ -39,6 +47,8 @@ namespace Orchard.Core.Tests.Common.Providers {
             get {
                 return new[] {
                                  typeof(ContentTypeRecord), 
+                                 typeof(ContentTypePartRecord), 
+                                 typeof(ContentTypePartNameRecord),
                                  typeof(ContentItemRecord), 
                                  typeof(ContentItemVersionRecord), 
                                  typeof(CommonRecord),
@@ -72,22 +82,84 @@ namespace Orchard.Core.Tests.Common.Providers {
             Assert.That(item.Record.OwnerId, Is.EqualTo(0));
         }
 
-        [Test,Ignore("This testing is still being worked out")]
-        public void OwnerShouldBeAuthenticatedUserIfAvailable() {
+        [Test]
+        public void PublishingShouldFailIfOwnerIsUnknown()
+        {
             var contentManager = _container.Resolve<IContentManager>();
+            var updateModel = new Mock<IUpdateModel>();
 
             var user = contentManager.New<IUser>("user");
             _authn.Setup(x => x.GetAuthenticatedUser()).Returns(user);
 
-            var item = contentManager.Create<CommonAspect>("test-item", init => { });
-            
-            ClearSession();
+            var createUtc = _clock.UtcNow;
+            var item = contentManager.Create<ICommonAspect>("test-item", VersionOptions.Draft, init => { });
+            var viewModel = new OwnerEditorViewModel() { Owner = "user" };
+            updateModel.Setup(x => x.TryUpdateModel(viewModel, "", null, null)).Returns(true);
+            contentManager.UpdateEditorModel(item.ContentItem, updateModel.Object);
+        }
 
-            Assert.That(item.Record.OwnerId, Is.EqualTo(6655321));
+        class UpdatModelStub : IUpdateModel {
+
+            ModelStateDictionary _modelState = new ModelStateDictionary();
+
+            public ModelStateDictionary ModelErrors
+            {
+                get { return _modelState; }
+            }
+           
+            public string Owner { get; set; }
+            
+            public bool TryUpdateModel<TModel>(TModel model, string prefix, string[] includeProperties, string[] excludeProperties) where TModel : class {
+                (model as OwnerEditorViewModel).Owner = Owner;
+                return true;
+            }
+
+            public void AddModelError(string key, LocalizedString errorMessage) {
+                _modelState.AddModelError(key, errorMessage.ToString());
+            }
         }
 
         [Test]
-        public void PublishingShouldSetPublishUtc() {
+        public void PublishingShouldNotThrowExceptionIfOwnerIsNull()
+        {
+            var contentManager = _container.Resolve<IContentManager>();
+
+            var item = contentManager.Create<ICommonAspect>("test-item", VersionOptions.Draft, init => { });
+
+            var user = contentManager.New<IUser>("user");
+            _authn.Setup(x => x.GetAuthenticatedUser()).Returns(user);
+            _authz.Setup(x => x.TryCheckAccess(Permissions.ChangeOwner, user, item)).Returns(true);
+
+            item.Owner = user;
+
+            var updater = new UpdatModelStub() { Owner = null };
+
+            contentManager.UpdateEditorModel(item.ContentItem, updater);
+        }
+
+        [Test]
+        public void PublishingShouldFailIfOwnerIsEmpty()
+        {
+            var contentManager = _container.Resolve<IContentManager>();
+
+            var item = contentManager.Create<ICommonAspect>("test-item", VersionOptions.Draft, init => { });
+            
+            var user = contentManager.New<IUser>("user");
+            _authn.Setup(x => x.GetAuthenticatedUser()).Returns(user);
+            _authz.Setup(x => x.TryCheckAccess(Permissions.ChangeOwner, user, item)).Returns(true);
+
+            item.Owner = user;
+
+            var updater = new UpdatModelStub() {Owner = ""};
+
+            contentManager.UpdateEditorModel(item.ContentItem, updater);
+
+            Assert.That(updater.ModelErrors.ContainsKey("CommonAspect.Owner"), Is.True);
+        }
+
+        [Test]
+        public void PublishingShouldSetPublishUtc()
+        {
             var contentManager = _container.Resolve<IContentManager>();
 
             var createUtc = _clock.UtcNow;
@@ -95,7 +167,7 @@ namespace Orchard.Core.Tests.Common.Providers {
 
             Assert.That(item.CreatedUtc, Is.EqualTo(createUtc));
             Assert.That(item.PublishedUtc, Is.Null);
-            
+
             _clock.Advance(TimeSpan.FromMinutes(1));
             var publishUtc = _clock.UtcNow;
 
@@ -104,6 +176,7 @@ namespace Orchard.Core.Tests.Common.Providers {
             Assert.That(item.CreatedUtc, Is.EqualTo(createUtc));
             Assert.That(item.PublishedUtc, Is.EqualTo(publishUtc));
         }
+
 
         [Test]
         public void VersioningItemShouldCreatedAndPublishedUtcValuesPerVersion() {
