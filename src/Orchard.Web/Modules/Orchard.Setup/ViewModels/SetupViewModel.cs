@@ -4,9 +4,9 @@ using Orchard.Mvc.ViewModels;
 
 namespace Orchard.Setup.ViewModels {
     public class SetupViewModel : BaseViewModel {
-    	public SetupViewModel() {
-    		DatabaseOptions = true;
-    	}
+        public SetupViewModel() {
+            DatabaseOptions = true;
+        }
 
         [Required(ErrorMessage = "Site name is required."), StringLength(70, ErrorMessage = "Site name can be no longer than 70 characters.")]
         public string SiteName { get; set; }
@@ -17,5 +17,7 @@ namespace Orchard.Setup.ViewModels {
         public bool DatabaseOptions { get; set; }
         [SqlDatabaseConnectionString]
         public string DatabaseConnectionString { get; set; }
+        public string DatabaseTablePrefix { get; set; }
+        public bool DatabaseIsPreconfigured { get; set; }
     }
 }

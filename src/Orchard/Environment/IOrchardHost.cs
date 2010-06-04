@@ -8,11 +8,6 @@ namespace Orchard.Environment {
         void Initialize();
 
         /// <summary>
-        /// Called when configuration changes requires the shell topology to be reloaded and applied
-        /// </summary>
-        void Reinitialize();
-
-        /// <summary>
         /// Called each time a request begins to offer a just-in-time reinitialization point
         /// </summary>
         void BeginRequest();
@@ -26,6 +21,6 @@ namespace Orchard.Environment {
         /// Can be used to build an temporary self-contained instance of a shell's configured code.
         /// Services may be resolved from within this instance to configure and initialize it's storage.
         /// </summary>
-        IStandaloneEnvironment CreateStandaloneEnvironment(IShellSettings shellSettings);
-    }
+        IStandaloneEnvironment CreateStandaloneEnvironment(ShellSettings shellSettings);
+    }    
 }
