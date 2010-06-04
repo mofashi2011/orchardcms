@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Text;
 using NUnit.Framework;
-using Orchard.Environment.Configuration;
+using Orchard.FileSystems.AppData;
 
 namespace Orchard.Tests.Environment.Configuration {
     [TestFixture]
@@ -90,6 +87,17 @@ test");
 this is
 a
 test"));
+        }
+
+        [Test]
+        public void FileExistsReturnsFalseForNonExistingFile() {
+            Assert.That(_appDataFolder.FileExists("notexisting"), Is.False);
+        }
+
+        [Test]
+        public void FileExistsReturnsTrueForExistingFile() {
+            _appDataFolder.CreateFile("alpha\\foo\\bar.txt", "");
+            Assert.That(_appDataFolder.FileExists("alpha\\foo\\bar.txt"), Is.True);
         }
     }
 }
