@@ -83,6 +83,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Routing\PageSlugConstraintUpdator.cs" />
+    <Compile Include="ViewModels\PageCommand.cs" />
     <Compile Include="ViewModels\PageCreateViewModel.cs" />
     <Compile Include="ViewModels\PageEditViewModel.cs" />
     <Compile Include="ViewModels\PagesViewModel.cs" />
