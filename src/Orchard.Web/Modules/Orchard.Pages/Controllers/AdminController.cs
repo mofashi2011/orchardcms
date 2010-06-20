@@ -137,15 +137,15 @@ namespace Orchard.Pages.Controllers {
             Services.ContentManager.UpdateEditorModel(page, this);
 
             // Execute publish command
-            switch (Request.Form["Command"]) {
-                case "PublishNow":
+            switch (model.Command) {
+                case PageCommand.PublishNow:
                     _pageService.Publish(model.Page.Item);
                     Services.Notifier.Information(T("Page has been published"));
                     if (model.PromoteToHomePage) {
                         CurrentSite.HomePage = "PageHomePageProvider;" + model.Page.Item.Id;
                     }
                     break;
-                case "PublishLater":
+                case PageCommand.PublishLater:
                     _pageService.Publish(model.Page.Item, model.Page.Item.ScheduledPublishUtc.Value);
                     Services.Notifier.Information(T("Page has been scheduled for publishing"));
                     break;
