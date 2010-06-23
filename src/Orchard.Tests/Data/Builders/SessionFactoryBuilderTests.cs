@@ -1,5 +1,7 @@
-﻿using System.Data.SqlClient;
+﻿using System;
+using System.Data.SqlClient;
 using System.IO;
+using FluentNHibernate.Cfg.Db;
 using NUnit.Framework;
 using Orchard.Data.Builders;
 using Orchard.Environment.Topology;
@@ -102,5 +104,48 @@ namespace Orchard.Tests.Data.Builders {
 
             sessionFactory.Close();
         }
+			[Test]
+			public void ShouldBlowWhenProviderTypeIsInexisting() {
+				
+				var recordDescriptors = new[] { new RecordTopology {TableName = "Hello", Type = typeof (FooRecord)} };
+				var parameters = 
+					new SessionFactoryParameters
+					{
+						ConnectionString = "q"
+						, UpdateSchema = true
+						, Provider = "Foo, Foo.SessionFactoryBuilder"
+						, RecordDescriptors = recordDescriptors
+					};
+				ISessionFactoryBuilder manager = new SessionFactoryBuilder();
+
+				var expectedOrchardException = Assert.Throws<OrchardException>(() =>  manager.BuildSessionFactory(parameters));
+				Assert.IsTrue(expectedOrchardException.Message.Contains(parameters.Provider));
+				Assert.IsNotNull(expectedOrchardException.InnerException);
+			}
+			[Test]
+			public void ShouldBlowWhenProviderTypeHasNoParameterlessConstructor() {
+				var recordDescriptors = new[] { new RecordTopology { TableName = "Hello", Type = typeof(FooRecord) } };
+				var parameters =
+					new SessionFactoryParameters
+					{
+						ConnectionString = "q"
+						, UpdateSchema = true
+						, Provider = typeof(BuilderWithNoParameterlessConstructor).AssemblyQualifiedName
+						, RecordDescriptors = recordDescriptors
+					};
+				ISessionFactoryBuilder manager = new SessionFactoryBuilder();
+				var expectedOrchardException = Assert.Throws<OrchardException>(() => manager.BuildSessionFactory(parameters));
+				Assert.IsTrue(expectedOrchardException.Message.Contains(parameters.Provider));
+				Assert.IsNotNull(expectedOrchardException.InnerException);
+			}
     }
+
+	public class BuilderWithNoParameterlessConstructor:AbstractBuilder{
+		public BuilderWithNoParameterlessConstructor(int useless) {
+			++useless;
+		}
+		protected override IPersistenceConfigurer GetPersistenceConfigurer(bool createDatabase) {
+			throw new NotImplementedException();
+		}
+	}
 }
